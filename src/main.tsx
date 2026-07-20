@@ -5,6 +5,7 @@ import './styles/tokens.css';
 import './styles/global.css';
 import './styles/shell.css';
 import './styles/components.css';
+import './styles/today.css';
 
 const rootElement = document.getElementById('root');
 

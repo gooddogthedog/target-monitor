@@ -2,7 +2,7 @@
 
 **Updated:** 2026-07-20  
 **State:** Implementing  
-**Active task:** Task 7 — build the presentational Today view while awaiting Claude's service contract.  
+**Active task:** Task 7 — publish the verified Today view and continue awaiting Claude's service contract.  
 **Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/today/`, `src/ui/`, `src/styles/`, `tests/ui/today.test.tsx`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
@@ -32,3 +32,5 @@
 - Completed the contract-independent Task 6 primitives: button, badge, confidence, missing-coverage notice, empty state, loading state, accessible modal, and responsive component styles.
 - Verification: `pnpm test -- tests/ui/shared-states.test.tsx` passed (5 tests total); `pnpm build` passed.
 - `AppServiceProvider` remains intentionally unwritten until Claude publishes the `AppService` contract and factory.
+- Completed the presentational Today route from approved visual `04`: dominant RaceTrac move, explainable ranking rationale, evidence chain, confidence and gate effect, exact-action preview, H-E-B blocker, and next-three queue.
+- Verification: `pnpm test -- tests/ui/today.test.tsx` passed (6 tests total); `pnpm build` passed.
