@@ -2,8 +2,8 @@
 
 **Updated:** 2026-07-20  
 **State:** Implementing  
-**Active task:** Task 9 — publish the verified Approvals, Library, and degraded-source checkpoint while awaiting Claude's service contract.  
-**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/approvals/`, `src/features/library/`, `src/features/settings/`, `src/ui/`, `src/styles/`, `tests/ui/approvals.test.tsx`, `tests/ui/library.test.tsx`, `tests/ui/source-health.test.tsx`, `work/coordination/CODEX_STATUS.md`  
+**Active task:** Task 10 — prepare contract-independent end-to-end journeys while awaiting Claude's service contract and browser authorization.  
+**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/`, `src/ui/`, `src/styles/`, `tests/e2e/`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
 
