@@ -2,8 +2,8 @@
 
 **Updated:** 2026-07-20  
 **State:** Implementing  
-**Active task:** Task 7 — publish the verified All Actions and Daily Brief checkpoint while awaiting Claude's service contract.  
-**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/actions/`, `src/features/brief/`, `src/ui/`, `src/styles/`, `tests/ui/actions.test.tsx`, `tests/ui/daily-brief.test.tsx`, `work/coordination/CODEX_STATUS.md`  
+**Active task:** Task 8 — build Targets, Pipeline, and Evidence as contract-independent, evidence-gated views while awaiting Claude's service contract.  
+**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/accounts/`, `src/features/pipeline/`, `src/features/evidence/`, `src/ui/`, `src/styles/`, `tests/ui/account-workspace.test.tsx`, `tests/ui/pipeline.test.tsx`, `tests/ui/evidence.test.tsx`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
 
