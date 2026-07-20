@@ -2,8 +2,8 @@
 
 **Updated:** 2026-07-20  
 **State:** Implementing  
-**Active task:** Task 7 — publish the verified Today view and continue awaiting Claude's service contract.  
-**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/today/`, `src/ui/`, `src/styles/`, `tests/ui/today.test.tsx`, `work/coordination/CODEX_STATUS.md`  
+**Active task:** Task 7 — build All Actions and Daily Brief while awaiting Claude's service contract.  
+**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/actions/`, `src/features/brief/`, `src/ui/`, `src/styles/`, `tests/ui/actions.test.tsx`, `tests/ui/daily-brief.test.tsx`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
 
