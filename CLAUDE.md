@@ -12,7 +12,10 @@ tooling, no tests, and no chosen tech stack**.
 
 This CLAUDE.md documents the **approved design** so that the architecture and its
 non-negotiable safety invariants are in front of you *before* the first line of
-code is written. Everything below describing screens, services, and behavior is a
+code is written. The full original design handoff is preserved verbatim at
+[`docs/handoff.md`](docs/handoff.md) (note: its "Saved Visuals" and "Instructions
+for the Next Session" sections reference an external workspace and image assets
+that do not exist in this repository). Everything below describing screens, services, and behavior is a
 **specification to build toward**, not a description of code that already exists.
 Sections marked _(placeholder)_ must be filled in with real values once they
 exist — do not invent commands, paths, or file names that aren't real yet.
