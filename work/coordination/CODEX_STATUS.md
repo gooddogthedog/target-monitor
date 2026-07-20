@@ -2,8 +2,8 @@
 
 **Updated:** 2026-07-20  
 **State:** Implementing  
-**Active task:** Task 6 — implement the shared visual system and resilient UI states.  
-**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/ui/`, `src/styles/`, `tests/ui/shared-states.test.tsx`, `dev-com/claude/new/20260720-002-contract-status.md`, `work/coordination/CODEX_STATUS.md`  
+**Active task:** Task 7 — build the presentational Today view while awaiting Claude's service contract.  
+**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/today/`, `src/ui/`, `src/styles/`, `tests/ui/today.test.tsx`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
 
