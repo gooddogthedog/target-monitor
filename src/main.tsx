@@ -8,6 +8,7 @@ import './styles/components.css';
 import './styles/today.css';
 import './styles/actions-brief.css';
 import './styles/accounts-pipeline-evidence.css';
+import './styles/approvals-library-settings.css';
 
 const rootElement = document.getElementById('root');
 

@@ -7,6 +7,9 @@ import { TargetsPage } from '../features/accounts/TargetsPage';
 import { AccountWorkspacePage } from '../features/accounts/AccountWorkspacePage';
 import { PipelinePage } from '../features/pipeline/PipelinePage';
 import { EvidencePage } from '../features/evidence/EvidencePage';
+import { ApprovalsPage } from '../features/approvals/ApprovalsPage';
+import { LibraryPage } from '../features/library/LibraryPage';
+import { SettingsPage } from '../features/settings/SettingsPage';
 import { PlaceholderPage } from './PlaceholderPage';
 
 function ShellLayout() {
@@ -80,10 +83,10 @@ export function AppRoutes() {
         <Route path="targets/:accountId" element={<AccountWorkspacePage />} />
         <Route path="pipeline" element={<PipelinePage />} />
         <Route path="evidence" element={<EvidencePage />} />
-        <Route path="approvals" element={page('approvals')} />
-        <Route path="approvals/:actionId" element={page('approvals')} />
-        <Route path="library" element={page('library')} />
-        <Route path="settings" element={page('settings')} />
+        <Route path="approvals" element={<ApprovalsPage />} />
+        <Route path="approvals/:actionId" element={<ApprovalsPage />} />
+        <Route path="library" element={<LibraryPage />} />
+        <Route path="settings" element={<SettingsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

@@ -2,7 +2,7 @@
 
 **Updated:** 2026-07-20  
 **State:** Implementing  
-**Active task:** Task 9 — build exact-action Approvals, Library, and degraded-source controls while awaiting Claude's service contract.  
+**Active task:** Task 9 — publish the verified Approvals, Library, and degraded-source checkpoint while awaiting Claude's service contract.  
 **Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/approvals/`, `src/features/library/`, `src/features/settings/`, `src/ui/`, `src/styles/`, `tests/ui/approvals.test.tsx`, `tests/ui/library.test.tsx`, `tests/ui/source-health.test.tsx`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
@@ -41,3 +41,7 @@
 - Completed Pipeline from approved reference `08`: evidence-earned lifecycle matrix, named blockers, gate review, and an accountable override that requires reason, owner, risk acknowledgement, and records a timestamped result.
 - Completed Evidence: filterable ledger, provenance-rich detail, confidence/freshness/conflict/confirmation fields, and explicit degraded-source coverage that keeps manual work usable.
 - Verification: full `pnpm test` passed (11 tests across 8 files); `pnpm build` passed.
+- Completed Approvals: exact channel/recipient/subject/content preview, local payload fingerprint, explicit lock, simulated founder-presence confirmation, edit-driven invalidation, single-use local completion, and immutable-looking demo receipt. No outbound provider is present.
+- Completed Library: versioned artifact list, review panel, and local-only text downloads.
+- Completed Settings source-health controls: independent email/calendar degradation, always-available manual work, and explicit reset confirmation before local seed replacement.
+- Verification: full `pnpm test` passed (16 tests across 11 files); `pnpm build` passed; forbidden-capability scan returned no email/social provider, network send, or publish implementation.
