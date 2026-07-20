@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { PipelinePage } from '../../src/features/pipeline/PipelinePage';
@@ -30,3 +30,12 @@ it('explains blocked progress and requires every accountability field for an ove
   expect(screen.getByText(/override recorded by Caleb/i)).toBeVisible();
 });
 
+it('binds an override to the account whose gate was reviewed', async () => {
+  const user = userEvent.setup();
+  render(<MemoryRouter><PipelinePage /></MemoryRouter>);
+  await user.click(screen.getByRole('button', { name: /review H-E-B blocked gate/i }));
+  await user.click(screen.getByRole('button', { name: /override with accountability/i }));
+  const dialog = screen.getByRole('dialog', { name: /accountable override · H-E-B/i });
+  expect(dialog).toBeVisible();
+  expect(within(dialog).getByText(/commissioning owner unknown/i)).toBeVisible();
+});

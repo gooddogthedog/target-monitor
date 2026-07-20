@@ -14,12 +14,12 @@ const accounts = [
 
 export function PipelinePage() {
   const [reviewed, setReviewed] = useState<(typeof accounts)[number] | null>(null);
-  const [overrideOpen, setOverrideOpen] = useState(false);
-  const [recordedOwner, setRecordedOwner] = useState<string | null>(null);
+  const [overrideTarget, setOverrideTarget] = useState<(typeof accounts)[number] | null>(null);
+  const [recordedOverride, setRecordedOverride] = useState<{ owner: string; account: string } | null>(null);
 
   function openOverride() {
+    setOverrideTarget(reviewed);
     setReviewed(null);
-    setOverrideOpen(true);
   }
 
   return (
@@ -37,10 +37,10 @@ export function PipelinePage() {
         </dl>
       </header>
 
-      {recordedOwner ? (
+      {recordedOverride ? (
         <aside className="override-record" role="status">
           <ShieldCheck aria-hidden="true" />
-          <div><strong>Override recorded by {recordedOwner}</strong><p>RaceTrac · July 20, 2026 · Risk acknowledgement preserved on the account timeline.</p></div>
+          <div><strong>Override recorded by {recordedOverride.owner}</strong><p>{recordedOverride.account} · July 20, 2026 · Risk acknowledgement preserved on the account timeline.</p></div>
         </aside>
       ) : null}
 
@@ -95,13 +95,15 @@ export function PipelinePage() {
         onOverride={openOverride}
       />
       <OverrideDialog
-        open={overrideOpen}
-        account="RaceTrac"
-        blocker="Buyer path not selected"
-        onClose={() => setOverrideOpen(false)}
-        onRecord={(owner) => { setRecordedOwner(owner); setOverrideOpen(false); }}
+        open={overrideTarget !== null}
+        account={overrideTarget?.name ?? ''}
+        blocker={overrideTarget?.blocker ?? ''}
+        onClose={() => setOverrideTarget(null)}
+        onRecord={(owner) => {
+          setRecordedOverride({ owner, account: overrideTarget?.name ?? 'Account' });
+          setOverrideTarget(null);
+        }}
       />
     </section>
   );
 }
-

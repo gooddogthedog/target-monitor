@@ -2,7 +2,7 @@
 
 **Updated:** 2026-07-20  
 **State:** Implementing  
-**Active task:** Task 10 — prepare contract-independent end-to-end journeys while awaiting Claude's service contract and browser authorization.  
+**Active task:** Task 10 — publish prepared end-to-end journeys while awaiting Claude's service contract and browser authorization.  
 **Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/`, `src/ui/`, `src/styles/`, `tests/e2e/`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
@@ -45,3 +45,6 @@
 - Completed Library: versioned artifact list, review panel, and local-only text downloads.
 - Completed Settings source-health controls: independent email/calendar degradation, always-available manual work, and explicit reset confirmation before local seed replacement.
 - Verification: full `pnpm test` passed (16 tests across 11 files); `pnpm build` passed; forbidden-capability scan returned no email/social provider, network send, or publish implementation.
+- Prepared Playwright journeys for RaceTrac local-only completion, H-E-B accountable override, changed-payload denial, degraded email/calendar operation, and mobile overflow/navigation checks. They are intentionally not browser-executed until the user names an approved browser.
+- Corrected account binding so an override remains attached to the exact reviewed account instead of a hardcoded RaceTrac target.
+- Verification: full `pnpm test` passed (17 tests across 11 files); `pnpm build` passed. `vitest` now excludes the separate `tests/e2e/` Playwright suite.
