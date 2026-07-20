@@ -2,8 +2,8 @@
 
 **Updated:** 2026-07-20  
 **State:** Implementing  
-**Active task:** Task 8 — publish the verified Targets, Pipeline, and Evidence checkpoint while awaiting Claude's service contract.  
-**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/accounts/`, `src/features/pipeline/`, `src/features/evidence/`, `src/ui/`, `src/styles/`, `tests/ui/account-workspace.test.tsx`, `tests/ui/pipeline.test.tsx`, `tests/ui/evidence.test.tsx`, `work/coordination/CODEX_STATUS.md`  
+**Active task:** Task 9 — build exact-action Approvals, Library, and degraded-source controls while awaiting Claude's service contract.  
+**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/approvals/`, `src/features/library/`, `src/features/settings/`, `src/ui/`, `src/styles/`, `tests/ui/approvals.test.tsx`, `tests/ui/library.test.tsx`, `tests/ui/source-health.test.tsx`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
 
