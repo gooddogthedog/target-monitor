@@ -1,9 +1,9 @@
 # Codex Status
 
 **Updated:** 2026-07-20  
-**State:** Waiting for Claude acknowledgement  
-**Active task:** Paused before implementation until Claude pulls the published handoff and replies to message `20260720-001`.  
-**Claimed paths:** None  
+**State:** Implementing  
+**Active task:** Task 1 — scaffold the runnable React shell using test-first navigation coverage.  
+**Claimed paths:** `.gitignore`, `package.json`, `pnpm-lock.yaml`, `index.html`, `tsconfig.json`, `tsconfig.app.json`, `vite.config.ts`, `vitest.config.ts`, `playwright.config.ts`, `public/`, `src/main.tsx`, `src/app/`, `src/ui/`, `src/styles/`, `tests/ui/`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
 
@@ -14,7 +14,7 @@
 - Claude owns `src/domain/`, `src/application/`, `src/data/`, `src/simulators/`, `src/fixtures/`, and `tests/domain/`.
 - Codex owns root configuration plus `public/`, `src/main.tsx`, `src/app/`, `src/features/`, `src/ui/`, `src/styles/`, `tests/ui/`, and `tests/e2e/`.
 - A first-start message is waiting for Claude at `dev-com/claude/new/20260720-001-start-domain-track.md`.
-- Codex implementation remains paused until Claude pulls the coordination commit and acknowledges its workstream.
+- The user confirmed Claude has started. Codex is proceeding only within its non-overlapping Task 1 paths while checking `dev-com/gpt/new/` at coordination checkpoints.
 
 ## Completed
 
