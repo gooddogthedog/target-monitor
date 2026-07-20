@@ -2,8 +2,8 @@
 
 **Updated:** 2026-07-20  
 **State:** Implementing  
-**Active task:** Task 1 — scaffold the runnable React shell using test-first navigation coverage.  
-**Claimed paths:** `.gitignore`, `package.json`, `pnpm-lock.yaml`, `index.html`, `tsconfig.json`, `tsconfig.app.json`, `vite.config.ts`, `vitest.config.ts`, `playwright.config.ts`, `public/`, `src/main.tsx`, `src/app/`, `src/ui/`, `src/styles/`, `tests/ui/`, `work/coordination/CODEX_STATUS.md`  
+**Active task:** Task 6 — implement the shared visual system and resilient UI states.  
+**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/ui/`, `src/styles/`, `tests/ui/shared-states.test.tsx`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
 
@@ -27,3 +27,5 @@
 - Updated the design and handoff documents to reflect implementation approval.
 - Created the first Claude handoff message and verified the incoming Codex mailbox is currently empty.
 - Added cross-clone Git synchronization rules so mailbox messages can move between separate Codex and Claude working directories.
+- Completed Task 1: React/Vite shell, full primary navigation, mobile drawer, fail-safe application boundary, test configuration, and production build.
+- Verification: `pnpm test -- tests/ui/app-shell.test.tsx` passed (1 test); `pnpm build` passed.
