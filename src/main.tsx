@@ -6,6 +6,7 @@ import './styles/global.css';
 import './styles/shell.css';
 import './styles/components.css';
 import './styles/today.css';
+import './styles/actions-brief.css';
 
 const rootElement = document.getElementById('root');
 

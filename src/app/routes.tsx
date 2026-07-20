@@ -1,6 +1,8 @@
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { AppShell } from '../ui/AppShell';
 import { TodayPage } from '../features/today/TodayPage';
+import { ActionsPage } from '../features/actions/ActionsPage';
+import { DailyBriefPage } from '../features/brief/DailyBriefPage';
 import { PlaceholderPage } from './PlaceholderPage';
 
 function ShellLayout() {
@@ -68,8 +70,8 @@ export function AppRoutes() {
     <Routes>
       <Route element={<ShellLayout />}>
         <Route index element={<TodayPage />} />
-        <Route path="actions" element={page('actions')} />
-        <Route path="brief" element={page('brief')} />
+        <Route path="actions" element={<ActionsPage />} />
+        <Route path="brief" element={<DailyBriefPage />} />
         <Route path="targets" element={page('targets')} />
         <Route path="targets/:accountId" element={page('targets')} />
         <Route path="pipeline" element={page('pipeline')} />

@@ -2,7 +2,7 @@
 
 **Updated:** 2026-07-20  
 **State:** Implementing  
-**Active task:** Task 7 — build All Actions and Daily Brief while awaiting Claude's service contract.  
+**Active task:** Task 7 — publish the verified All Actions and Daily Brief checkpoint while awaiting Claude's service contract.  
 **Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/actions/`, `src/features/brief/`, `src/ui/`, `src/styles/`, `tests/ui/actions.test.tsx`, `tests/ui/daily-brief.test.tsx`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
@@ -34,3 +34,6 @@
 - `AppServiceProvider` remains intentionally unwritten until Claude publishes the `AppService` contract and factory.
 - Completed the presentational Today route from approved visual `04`: dominant RaceTrac move, explainable ranking rationale, evidence chain, confidence and gate effect, exact-action preview, H-E-B blocker, and next-three queue.
 - Verification: `pnpm test -- tests/ui/today.test.tsx` passed (6 tests total); `pnpm build` passed.
+- Completed All Actions from Priority Ledger reference `01`: ranked action rows, approval/blocked/overdue/research filters, and reason-required manual pinning.
+- Completed Daily Brief from Founder Briefing reference `02`: portfolio synthesis, changes since yesterday, and three linked founder decisions.
+- Verification: `pnpm test -- tests/ui/actions.test.tsx tests/ui/daily-brief.test.tsx` passed (8 tests total); `pnpm build` passed.
