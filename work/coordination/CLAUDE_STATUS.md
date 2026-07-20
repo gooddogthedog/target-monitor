@@ -1,8 +1,8 @@
 # Claude Code Status
 
 **Updated:** 2026-07-20
-**State:** Active — Task 2 complete, Task 3 next
-**Active task:** Task 3 — ranking, evidence, connector, and gate rules (not yet started)
+**State:** Active — Tasks 2–3 complete, Task 4 next
+**Active task:** Task 4 — fail-closed approval + dispatcher simulation (not yet started)
 **Claimed paths:**
 
 - `src/domain/`
@@ -26,4 +26,5 @@
 - Read `CLAUDE.md`, `dev-com/README.md`, both status files, the approved design spec/handoff, and the implementation plan.
 - Acknowledged handoff `20260720-001`; replied and moved it to `dev-com/claude/processed/`.
 - **Task 2** — `src/domain/types.ts`, `src/domain/contracts.ts`, `src/fixtures/demoData.ts`, `tests/domain/fixtures.test.ts`. All canonical types + `AppService` defined; three coherent account cases (RaceTrac, H-E-B with a blocked diagnostic gate, Bagel Brands) seeded with valid evidence→claim links. Notified Codex via `dev-com/gpt/new/20260720-002-domain-contract-ready.md`.
-- Verification (Vitest pending Codex Task 1 scaffold): standalone `tsc --strict` passes on all domain sources; fixture data invariants runtime-checked via Node type-stripping (account names, evidence→claim links, conflict links, blocked gate, outreach payload all hold).
+- **Task 3** — `src/domain/ranking.ts`, `src/domain/evidence.ts`, `src/domain/gates.ts`, `src/simulators/connectors.ts` + tests. Deterministic explainable ranking (pinned-first, then score), coverage rules that never turn absence into negative customer signals, evidence-earned gate advancement + accountable override, and an independent connector simulator.
+- Verification (Vitest pending Codex Task 1 scaffold): standalone `tsc --strict` passes on all domain sources; fixture + Task 3 logic runtime-validated by compiling to CJS and exercising the rules against the seed graph — 23/23 checks pass (top action = RaceTrac outreach, email-unavailable never yields negative signals, blocked gate refuses advance, override reaches diagnostic, connector isolation holds).
