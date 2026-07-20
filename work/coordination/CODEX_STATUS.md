@@ -2,7 +2,7 @@
 
 **Updated:** 2026-07-20  
 **State:** Implementing  
-**Active task:** Task 8 — build Targets, Pipeline, and Evidence as contract-independent, evidence-gated views while awaiting Claude's service contract.  
+**Active task:** Task 8 — publish the verified Targets, Pipeline, and Evidence checkpoint while awaiting Claude's service contract.  
 **Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/accounts/`, `src/features/pipeline/`, `src/features/evidence/`, `src/ui/`, `src/styles/`, `tests/ui/account-workspace.test.tsx`, `tests/ui/pipeline.test.tsx`, `tests/ui/evidence.test.tsx`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
@@ -37,3 +37,7 @@
 - Completed All Actions from Priority Ledger reference `01`: ranked action rows, approval/blocked/overdue/research filters, and reason-required manual pinning.
 - Completed Daily Brief from Founder Briefing reference `02`: portfolio synthesis, changes since yesterday, and three linked founder decisions.
 - Verification: `pnpm test -- tests/ui/actions.test.tsx tests/ui/daily-brief.test.tsx` passed (8 tests total); `pnpm build` passed.
+- Completed Targets and the RaceTrac account workspace from approved reference `05`: lifecycle rail, working workspace tabs, deal thesis, distinct Known / Strong inference / Must learn evidence classes, and blocked Contacted gate.
+- Completed Pipeline from approved reference `08`: evidence-earned lifecycle matrix, named blockers, gate review, and an accountable override that requires reason, owner, risk acknowledgement, and records a timestamped result.
+- Completed Evidence: filterable ledger, provenance-rich detail, confidence/freshness/conflict/confirmation fields, and explicit degraded-source coverage that keeps manual work usable.
+- Verification: full `pnpm test` passed (11 tests across 8 files); `pnpm build` passed.

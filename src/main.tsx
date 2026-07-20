@@ -7,6 +7,7 @@ import './styles/shell.css';
 import './styles/components.css';
 import './styles/today.css';
 import './styles/actions-brief.css';
+import './styles/accounts-pipeline-evidence.css';
 
 const rootElement = document.getElementById('root');
 

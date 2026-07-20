@@ -3,6 +3,10 @@ import { AppShell } from '../ui/AppShell';
 import { TodayPage } from '../features/today/TodayPage';
 import { ActionsPage } from '../features/actions/ActionsPage';
 import { DailyBriefPage } from '../features/brief/DailyBriefPage';
+import { TargetsPage } from '../features/accounts/TargetsPage';
+import { AccountWorkspacePage } from '../features/accounts/AccountWorkspacePage';
+import { PipelinePage } from '../features/pipeline/PipelinePage';
+import { EvidencePage } from '../features/evidence/EvidencePage';
 import { PlaceholderPage } from './PlaceholderPage';
 
 function ShellLayout() {
@@ -72,10 +76,10 @@ export function AppRoutes() {
         <Route index element={<TodayPage />} />
         <Route path="actions" element={<ActionsPage />} />
         <Route path="brief" element={<DailyBriefPage />} />
-        <Route path="targets" element={page('targets')} />
-        <Route path="targets/:accountId" element={page('targets')} />
-        <Route path="pipeline" element={page('pipeline')} />
-        <Route path="evidence" element={page('evidence')} />
+        <Route path="targets" element={<TargetsPage />} />
+        <Route path="targets/:accountId" element={<AccountWorkspacePage />} />
+        <Route path="pipeline" element={<PipelinePage />} />
+        <Route path="evidence" element={<EvidencePage />} />
         <Route path="approvals" element={page('approvals')} />
         <Route path="approvals/:actionId" element={page('approvals')} />
         <Route path="library" element={page('library')} />
