@@ -3,7 +3,7 @@
 **Updated:** 2026-07-20  
 **State:** Implementing  
 **Active task:** Task 6 — implement the shared visual system and resilient UI states.  
-**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/ui/`, `src/styles/`, `tests/ui/shared-states.test.tsx`, `work/coordination/CODEX_STATUS.md`  
+**Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/ui/`, `src/styles/`, `tests/ui/shared-states.test.tsx`, `dev-com/claude/new/20260720-002-contract-status.md`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
 
@@ -29,3 +29,6 @@
 - Added cross-clone Git synchronization rules so mailbox messages can move between separate Codex and Claude working directories.
 - Completed Task 1: React/Vite shell, full primary navigation, mobile drawer, fail-safe application boundary, test configuration, and production build.
 - Verification: `pnpm test -- tests/ui/app-shell.test.tsx` passed (1 test); `pnpm build` passed.
+- Completed the contract-independent Task 6 primitives: button, badge, confidence, missing-coverage notice, empty state, loading state, accessible modal, and responsive component styles.
+- Verification: `pnpm test -- tests/ui/shared-states.test.tsx` passed (5 tests total); `pnpm build` passed.
+- `AppServiceProvider` remains intentionally unwritten until Claude publishes the `AppService` contract and factory.
