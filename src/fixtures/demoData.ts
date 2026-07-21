@@ -1,0 +1,606 @@
+// Approved demo seed graph for the Action Command Center.
+//
+// Three coherent target cases (RaceTrac, H-E-B, Bagel Brands), each with an
+// evidence chain, a stage gate, ranked actions, and artifacts. Data is
+// deterministic: fixed IDs and ISO timestamps so tests, ranking, and the demo
+// reset are reproducible. Every `Evidence.claimIds` entry references a real
+// claim, and every conflict/attachment reference resolves within this graph.
+//
+// Invariant reminder: nothing here is an outbound credential or a real send.
+// The RaceTrac outreach action is a *draft proposal* that must pass the
+// fail-closed simulated approval flow before any (simulated) dispatch.
+
+import type { DemoData } from '../domain/types';
+
+// Reference "today" for the demo. Timestamps are anchored around this instant
+// so freshness and due dates read sensibly relative to it.
+const T = {
+  today: '2026-07-20T14:00:00.000Z',
+  d1: '2026-07-19T09:30:00.000Z',
+  d2: '2026-07-17T16:10:00.000Z',
+  d5: '2026-07-15T11:00:00.000Z',
+  d10: '2026-07-10T13:45:00.000Z',
+  d15: '2026-07-05T10:20:00.000Z',
+  d22: '2026-06-28T15:00:00.000Z',
+  d30: '2026-06-20T12:00:00.000Z',
+  due3: '2026-07-23T17:00:00.000Z',
+  due5: '2026-07-25T17:00:00.000Z',
+  due7: '2026-07-27T17:00:00.000Z',
+} as const;
+
+export const demoData: DemoData = {
+  users: [
+    { id: 'user-caleb', name: 'Caleb (Founder)', designatedOwner: true },
+    { id: 'user-jordan', name: 'Jordan (Partner)', designatedOwner: false },
+  ],
+
+  // Workspace-level source adapters. Each is independent; disconnecting one
+  // must never be read as negative customer evidence.
+  sources: [
+    {
+      id: 'source-manual',
+      type: 'manual',
+      health: 'connected',
+      lastSuccessfulSync: T.today,
+      coverageNote: 'Manual notes and tasks are always available.',
+    },
+    {
+      id: 'source-web',
+      type: 'public-web',
+      health: 'connected',
+      lastSuccessfulSync: T.d1,
+      coverageNote: 'Public web research across corporate and news sources.',
+    },
+    {
+      id: 'source-email',
+      type: 'email',
+      health: 'connected',
+      lastSuccessfulSync: T.d2,
+      coverageNote: 'Optional email adapter for captured correspondence.',
+    },
+    {
+      id: 'source-calendar',
+      type: 'calendar',
+      health: 'connected',
+      lastSuccessfulSync: T.d2,
+      coverageNote: 'Optional calendar adapter for scheduled engagements.',
+    },
+    {
+      id: 'source-files',
+      type: 'file',
+      health: 'connected',
+      lastSuccessfulSync: T.d5,
+      coverageNote: 'Uploaded decks, documents, and exports.',
+    },
+  ],
+
+  accounts: [
+    {
+      id: 'racetrac',
+      name: 'RaceTrac',
+      brands: ['RaceTrac', 'RaceWay'],
+      estateSummary: '800+ fueling and convenience locations across the US South.',
+      qualificationScore: 78,
+      ownerId: 'user-caleb',
+      phase: 'account-thesis',
+    },
+    {
+      id: 'heb',
+      name: 'H-E-B',
+      brands: ['H-E-B', 'Central Market'],
+      estateSummary: '400+ grocery stores concentrated in Texas with strong private label.',
+      qualificationScore: 84,
+      ownerId: 'user-caleb',
+      phase: 'discovery',
+    },
+    {
+      id: 'bagel-brands',
+      name: 'Bagel Brands',
+      brands: ['Einstein Bros. Bagels', "Bruegger's Bagels"],
+      estateSummary: 'Multi-brand bakery-cafe operator with roughly 1,000 locations.',
+      qualificationScore: 71,
+      ownerId: 'user-jordan',
+      phase: 'contacted',
+    },
+  ],
+
+  claims: [
+    // RaceTrac
+    {
+      id: 'claim-racetrac-1',
+      accountId: 'racetrac',
+      statement: 'RaceTrac operates 800+ fueling and convenience locations across the US South.',
+      classification: 'known',
+      confidence: 'high',
+      freshness: 'fresh',
+      confirmation: 'confirmed',
+    },
+    {
+      id: 'claim-racetrac-2',
+      accountId: 'racetrac',
+      statement: 'Store-level signage and promo execution is fragmented, producing inconsistent brand execution.',
+      classification: 'strong-inference',
+      confidence: 'medium',
+      freshness: 'aging',
+      confirmation: 'unreviewed',
+    },
+    {
+      id: 'claim-racetrac-3',
+      accountId: 'racetrac',
+      statement: 'The accountable owner for in-store digital/signage refresh decisions is not yet identified.',
+      classification: 'must-learn',
+      confidence: 'low',
+      freshness: 'unknown',
+      confirmation: 'unreviewed',
+    },
+    // H-E-B
+    {
+      id: 'claim-heb-1',
+      accountId: 'heb',
+      statement: 'H-E-B runs 400+ grocery stores concentrated in Texas with strong private-label operations.',
+      classification: 'known',
+      confidence: 'high',
+      freshness: 'fresh',
+      confirmation: 'confirmed',
+    },
+    {
+      id: 'claim-heb-2',
+      accountId: 'heb',
+      statement: 'Prepared-foods perishable shrink is a recurring margin pressure across regions.',
+      classification: 'strong-inference',
+      confidence: 'medium',
+      freshness: 'aging',
+      confirmation: 'unreviewed',
+    },
+    {
+      id: 'claim-heb-3',
+      accountId: 'heb',
+      statement: 'The current prepared-foods shrink baseline by region is unknown to us.',
+      classification: 'must-learn',
+      confidence: 'low',
+      freshness: 'unknown',
+      confirmation: 'unreviewed',
+    },
+    // Bagel Brands
+    {
+      id: 'claim-bagel-1',
+      accountId: 'bagel-brands',
+      statement: 'Bagel Brands operates Einstein Bros. and Bruegger’s with roughly 1,000 locations.',
+      classification: 'known',
+      confidence: 'high',
+      freshness: 'fresh',
+      confirmation: 'confirmed',
+    },
+    {
+      id: 'claim-bagel-2',
+      accountId: 'bagel-brands',
+      statement: 'Multi-brand menu and signage updates are coordinated centrally but executed unevenly in-store.',
+      classification: 'strong-inference',
+      confidence: 'medium',
+      freshness: 'aging',
+      confirmation: 'unreviewed',
+    },
+    {
+      id: 'claim-bagel-3',
+      accountId: 'bagel-brands',
+      statement: 'The accountable owner for multi-brand in-store execution still needs to be verified.',
+      classification: 'must-learn',
+      confidence: 'low',
+      freshness: 'unknown',
+      confirmation: 'unreviewed',
+    },
+  ],
+
+  evidence: [
+    // RaceTrac
+    {
+      id: 'ev-racetrac-1',
+      accountId: 'racetrac',
+      sourceId: 'source-web',
+      title: 'RaceTrac corporate overview',
+      summary: 'Public corporate profile confirming store count and Southern US footprint.',
+      provenance: 'racetrac.com/about (captured)',
+      capturedAt: T.d5,
+      claimIds: ['claim-racetrac-1'],
+      conflictsWithEvidenceIds: [],
+    },
+    {
+      id: 'ev-racetrac-2',
+      accountId: 'racetrac',
+      sourceId: 'source-web',
+      title: 'Store operations trade coverage',
+      summary: 'Industry coverage noting decentralized store-level marketing execution.',
+      provenance: 'Trade press summary (captured)',
+      capturedAt: T.d10,
+      claimIds: ['claim-racetrac-2'],
+      conflictsWithEvidenceIds: [],
+    },
+    {
+      id: 'ev-racetrac-3',
+      accountId: 'racetrac',
+      sourceId: 'source-files',
+      title: 'Uploaded segment analysis deck',
+      summary: 'Internal analysis deck corroborating footprint and expansion cadence.',
+      provenance: 'racetrac-segment-analysis.pdf',
+      capturedAt: T.d15,
+      claimIds: ['claim-racetrac-1'],
+      conflictsWithEvidenceIds: [],
+    },
+
+    // H-E-B (ev-heb-3 conflicts with ev-heb-2 on the shrink figure)
+    {
+      id: 'ev-heb-1',
+      accountId: 'heb',
+      sourceId: 'source-web',
+      title: 'H-E-B operations profile',
+      summary: 'Public profile confirming Texas footprint and private-label depth.',
+      provenance: 'heb.com/newsroom (captured)',
+      capturedAt: T.d2,
+      claimIds: ['claim-heb-1'],
+      conflictsWithEvidenceIds: [],
+    },
+    {
+      id: 'ev-heb-2',
+      accountId: 'heb',
+      sourceId: 'source-email',
+      title: 'Discovery contact reply',
+      summary: 'Emailed reply referencing prepared-foods shrink of roughly 6% in pilot regions.',
+      provenance: 'Captured email thread',
+      capturedAt: T.d10,
+      claimIds: ['claim-heb-2'],
+      conflictsWithEvidenceIds: ['ev-heb-3'],
+    },
+    {
+      id: 'ev-heb-3',
+      accountId: 'heb',
+      sourceId: 'source-files',
+      title: 'Regional shrink working file',
+      summary: 'Uploaded working file citing shrink near 9% for some regions; conflicts with the emailed figure.',
+      provenance: 'heb-shrink-working.xlsx',
+      capturedAt: T.d15,
+      claimIds: ['claim-heb-2', 'claim-heb-3'],
+      conflictsWithEvidenceIds: ['ev-heb-2'],
+    },
+
+    // Bagel Brands
+    {
+      id: 'ev-bagel-1',
+      accountId: 'bagel-brands',
+      sourceId: 'source-web',
+      title: 'Bagel Brands brand portfolio',
+      summary: 'Public overview of the multi-brand portfolio and store count.',
+      provenance: 'Corporate site (captured)',
+      capturedAt: T.d5,
+      claimIds: ['claim-bagel-1'],
+      conflictsWithEvidenceIds: [],
+    },
+    {
+      id: 'ev-bagel-2',
+      accountId: 'bagel-brands',
+      sourceId: 'source-calendar',
+      title: 'Scheduled intro call',
+      summary: 'Calendar entry for an introductory operations call with a regional lead.',
+      provenance: 'Calendar event (captured)',
+      capturedAt: T.d5,
+      claimIds: ['claim-bagel-2'],
+      conflictsWithEvidenceIds: [],
+    },
+    {
+      id: 'ev-bagel-3',
+      accountId: 'bagel-brands',
+      sourceId: 'source-manual',
+      title: 'Founder note on ownership question',
+      summary: 'Manual note flagging that the in-store execution owner is still unconfirmed.',
+      provenance: 'Manual note',
+      capturedAt: T.d2,
+      claimIds: ['claim-bagel-3'],
+      conflictsWithEvidenceIds: [],
+    },
+  ],
+
+  gates: [
+    // RaceTrac: account-thesis -> contacted. Blocked only by approved outreach.
+    {
+      id: 'gate-racetrac-contacted',
+      accountId: 'racetrac',
+      phase: 'account-thesis',
+      criteria: [
+        {
+          id: 'gate-racetrac-thesis',
+          label: 'Deal thesis drafted (problem, consequence, trigger, wedge)',
+          complete: true,
+          evidenceIds: ['ev-racetrac-1', 'ev-racetrac-2'],
+        },
+        {
+          id: 'gate-racetrac-map',
+          label: 'Account map and entry strategy drafted',
+          complete: true,
+          evidenceIds: ['ev-racetrac-3'],
+        },
+        {
+          id: 'gate-racetrac-outreach',
+          label: 'Outreach approved through the exact-action flow',
+          complete: false,
+          evidenceIds: [],
+        },
+      ],
+      blocker: null,
+      approvedBy: null,
+      approvedAt: null,
+    },
+
+    // H-E-B: discovery -> diagnostic. Blocked pending data-access approval.
+    {
+      id: 'gate-heb-diagnostic',
+      accountId: 'heb',
+      phase: 'discovery',
+      criteria: [
+        {
+          id: 'gate-heb-operational',
+          label: 'Operational discovery complete',
+          complete: true,
+          evidenceIds: ['ev-heb-1'],
+        },
+        {
+          id: 'gate-heb-commercial',
+          label: 'Commercial discovery complete',
+          complete: true,
+          evidenceIds: ['ev-heb-2'],
+        },
+        {
+          id: 'gate-heb-data-access',
+          label: 'Systems/data access granted for baseline measurement',
+          complete: false,
+          evidenceIds: [],
+        },
+      ],
+      blocker: 'Awaiting data-sharing approval from the H-E-B analytics team.',
+      approvedBy: null,
+      approvedAt: null,
+    },
+
+    // Bagel Brands: contacted -> discovery. Needs ownership verification.
+    {
+      id: 'gate-bagel-discovery',
+      accountId: 'bagel-brands',
+      phase: 'contacted',
+      criteria: [
+        {
+          id: 'gate-bagel-engagement',
+          label: 'Real engagement path confirmed',
+          complete: true,
+          evidenceIds: ['ev-bagel-2'],
+        },
+        {
+          id: 'gate-bagel-owner',
+          label: 'Accountable in-store execution owner verified',
+          complete: false,
+          evidenceIds: [],
+        },
+        {
+          id: 'gate-bagel-scope',
+          label: 'Discovery scope agreed',
+          complete: true,
+          evidenceIds: ['ev-bagel-1'],
+        },
+      ],
+      blocker: null,
+      approvedBy: null,
+      approvedAt: null,
+    },
+  ],
+
+  actions: [
+    {
+      id: 'action-racetrac-outreach',
+      accountId: 'racetrac',
+      title: 'Send founder intro to RaceTrac VP of Store Operations',
+      type: 'outreach',
+      rationale:
+        'The thesis and account map are complete; a targeted founder intro is the earned next move to open a real engagement path.',
+      evidenceIds: ['ev-racetrac-1', 'ev-racetrac-2'],
+      expectedGateEffect: 'Completes the outreach criterion, enabling advance to Contacted.',
+      rankFactors: {
+        impact: 5,
+        readiness: 4,
+        urgency: 5,
+        unblockValue: 4,
+        evidenceConfidence: 4,
+        effort: 2,
+        customerRisk: 1,
+        costOfDelay: 3,
+      },
+      dueAt: T.due3,
+      ownerId: 'user-caleb',
+      state: 'draft',
+      payload: {
+        channel: 'email',
+        recipientOrAccount: 'VP Store Operations, RaceTrac',
+        subject: 'A narrow idea on consistent in-store execution',
+        content:
+          'Hi — we help multi-site operators tighten in-store execution across locations. Based on RaceTrac’s footprint, I have one narrow idea worth 20 minutes. Open to a short call next week?',
+        attachmentIds: [],
+        scheduledFor: null,
+      },
+      pinnedReason: null,
+    },
+    {
+      id: 'action-racetrac-research',
+      accountId: 'racetrac',
+      title: 'Identify the accountable owner for RaceTrac in-store execution',
+      type: 'research',
+      rationale: 'Resolves the open must-learn claim before discovery.',
+      evidenceIds: ['ev-racetrac-2'],
+      expectedGateEffect: 'Strengthens the thesis and de-risks outreach targeting.',
+      rankFactors: {
+        impact: 3,
+        readiness: 3,
+        urgency: 3,
+        unblockValue: 3,
+        evidenceConfidence: 3,
+        effort: 2,
+        customerRisk: 1,
+        costOfDelay: 1,
+      },
+      dueAt: T.due7,
+      ownerId: 'user-caleb',
+      state: 'draft',
+      payload: null,
+      pinnedReason: null,
+    },
+    {
+      id: 'action-heb-discovery',
+      accountId: 'heb',
+      title: 'Prepare the diagnostic data request for H-E-B analytics',
+      type: 'internal',
+      rationale:
+        'The diagnostic gate is blocked on data access; a precise, scoped request is the highest-leverage unblock.',
+      evidenceIds: ['ev-heb-2', 'ev-heb-3'],
+      expectedGateEffect: 'Targets the blocked data-access criterion on the diagnostic gate.',
+      rankFactors: {
+        impact: 4,
+        readiness: 3,
+        urgency: 4,
+        unblockValue: 5,
+        evidenceConfidence: 3,
+        effort: 3,
+        customerRisk: 2,
+        costOfDelay: 2,
+      },
+      dueAt: T.due5,
+      ownerId: 'user-caleb',
+      state: 'draft',
+      payload: null,
+      pinnedReason: null,
+    },
+    {
+      id: 'action-heb-reconcile',
+      accountId: 'heb',
+      title: 'Reconcile conflicting prepared-foods shrink figures',
+      type: 'internal',
+      rationale: 'Two sources disagree on the shrink baseline; the conflict must be resolved before a diagnostic baseline.',
+      evidenceIds: ['ev-heb-2', 'ev-heb-3'],
+      expectedGateEffect: 'Improves evidence confidence ahead of the diagnostic baseline.',
+      rankFactors: {
+        impact: 2,
+        readiness: 3,
+        urgency: 2,
+        unblockValue: 2,
+        evidenceConfidence: 2,
+        effort: 2,
+        customerRisk: 1,
+        costOfDelay: 1,
+      },
+      dueAt: T.due7,
+      ownerId: 'user-caleb',
+      state: 'draft',
+      payload: null,
+      pinnedReason: null,
+    },
+    {
+      id: 'action-bagel-verify',
+      accountId: 'bagel-brands',
+      title: 'Verify the accountable owner for Bagel Brands in-store execution',
+      type: 'research',
+      rationale:
+        'Ownership verification is the one incomplete criterion blocking advance from Contacted to Discovery.',
+      evidenceIds: ['ev-bagel-2', 'ev-bagel-3'],
+      expectedGateEffect: 'Completes the ownership criterion on the discovery gate.',
+      rankFactors: {
+        impact: 4,
+        readiness: 4,
+        urgency: 3,
+        unblockValue: 4,
+        evidenceConfidence: 3,
+        effort: 2,
+        customerRisk: 1,
+        costOfDelay: 2,
+      },
+      dueAt: T.due5,
+      ownerId: 'user-jordan',
+      state: 'draft',
+      payload: null,
+      pinnedReason: null,
+    },
+    {
+      id: 'action-bagel-schedule',
+      accountId: 'bagel-brands',
+      title: 'Confirm the discovery kickoff agenda for Bagel Brands',
+      type: 'internal',
+      rationale: 'Keeps the confirmed engagement warm while ownership is verified.',
+      evidenceIds: ['ev-bagel-2'],
+      expectedGateEffect: 'Prepares discovery once the gate advances.',
+      rankFactors: {
+        impact: 2,
+        readiness: 4,
+        urgency: 2,
+        unblockValue: 2,
+        evidenceConfidence: 3,
+        effort: 2,
+        customerRisk: 1,
+        costOfDelay: 1,
+      },
+      dueAt: T.due7,
+      ownerId: 'user-jordan',
+      state: 'draft',
+      payload: null,
+      pinnedReason: null,
+    },
+  ],
+
+  // Envelopes and receipts are created at runtime through the fail-closed
+  // approval flow; the demo starts with none.
+  approvals: [],
+  receipts: [],
+
+  artifacts: [
+    {
+      id: 'art-racetrac-brief',
+      accountId: 'racetrac',
+      phase: 'target-brief',
+      type: 'target-brief',
+      version: 2,
+      status: 'approved',
+      title: 'RaceTrac target brief',
+      content:
+        'Problem: inconsistent in-store execution across a large Southern footprint. Consequence: brand and promo leakage. Trigger: multi-year refresh cycle. Wedge: consistent execution tooling for signage and promo.',
+      updatedAt: T.d10,
+    },
+    {
+      id: 'art-racetrac-outreach',
+      accountId: 'racetrac',
+      phase: 'account-thesis',
+      type: 'outreach-draft',
+      version: 1,
+      status: 'reviewed',
+      title: 'RaceTrac founder intro draft',
+      content:
+        'Draft founder intro to the VP of Store Operations. Pending exact-action approval before any simulated dispatch.',
+      updatedAt: T.d2,
+    },
+    {
+      id: 'art-heb-discovery',
+      accountId: 'heb',
+      phase: 'discovery',
+      type: 'discovery-memo',
+      version: 3,
+      status: 'reviewed',
+      title: 'H-E-B discovery memo',
+      content:
+        'Operational and commercial discovery summary. Open item: reconcile conflicting prepared-foods shrink figures and secure data access for the baseline.',
+      updatedAt: T.d5,
+    },
+    {
+      id: 'art-bagel-brief',
+      accountId: 'bagel-brands',
+      phase: 'target-brief',
+      type: 'target-brief',
+      version: 1,
+      status: 'approved',
+      title: 'Bagel Brands target brief',
+      content:
+        'Problem: uneven multi-brand in-store execution. Consequence: inconsistent guest experience. Trigger: multi-brand coordination push. Wedge: centralized execution with reliable store-level rollout.',
+      updatedAt: T.d15,
+    },
+  ],
+};
