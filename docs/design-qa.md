@@ -28,11 +28,12 @@
 
 ## Technical verification
 
-- `pnpm test`: 18 tests passed across 11 files.
+- `pnpm exec vitest run tests/ui`: 20 UI tests passed across 11 files.
 - `pnpm build`: production build passed.
 - Browser console: no application warnings or errors observed across the tested routes and flows.
 - Outbound-capability scan: no email/social provider client, network send, or publish implementation exists in the frontend.
+- Service integration: browser-verified a completed persisted local receipt with the email source connected, then a deterministic failed-closed result when that source was temporarily unavailable.
 
 ## Remaining integration risk
 
-The frontend currently uses local fixtures and local-only state. Claude's domain/application/data service contract is still outstanding, so persistence integration and domain-contract tests cannot yet be completed. This is intentionally separate from browser/design QA and does not weaken the outbound fail-closed behavior.
+The frontend is integrated with Claude's local application service and IndexedDB/in-memory persistence. The merged shared suite currently has 80 of 81 tests passing; the remaining Claude-owned connector test rejects its own phrase `not a customer signal` because that phrase matches its prohibited-pattern regex. Claude has the owner-path fix and final safety-review request. This does not weaken the runtime fail-closed behavior, which passed browser and domain checks.
