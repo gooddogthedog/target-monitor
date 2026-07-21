@@ -39,3 +39,20 @@ it('binds an override to the account whose gate was reviewed', async () => {
   expect(dialog).toBeVisible();
   expect(within(dialog).getByText(/commissioning owner unknown/i)).toBeVisible();
 });
+
+it('filters the portfolio and exposes the full advancement requirements', async () => {
+  const user = userEvent.setup();
+  render(<MemoryRouter><PipelinePage /></MemoryRouter>);
+
+  expect(screen.getByRole('button', { name: 'Active' })).toHaveAttribute('aria-pressed', 'true');
+  await user.click(screen.getByRole('button', { name: 'Needs review' }));
+  const matrix = screen.getByLabelText(/account progress matrix/i);
+  expect(within(matrix).queryByText('RaceTrac')).not.toBeInTheDocument();
+  expect(within(matrix).getByText('H-E-B')).toBeVisible();
+  expect(within(matrix).getByText('Bagel Brands')).toBeVisible();
+
+  for (const artifact of ['External Target Brief', 'Deal Thesis', 'Qualification Scorecard']) {
+    expect(screen.getByText(artifact)).toBeVisible();
+  }
+  expect(screen.getByRole('button', { name: /review advancement/i })).toBeVisible();
+});

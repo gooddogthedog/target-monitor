@@ -1,8 +1,8 @@
 # Codex Status
 
 **Updated:** 2026-07-20  
-**State:** Implementing  
-**Active task:** Task 10 — publish prepared end-to-end journeys while awaiting Claude's service contract and browser authorization.  
+**State:** Frontend verified; awaiting Claude integration contract
+**Active task:** Integrate Claude's `AppService` contract when published; the current local-only frontend and browser QA are complete.
 **Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/`, `src/ui/`, `src/styles/`, `tests/e2e/`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
@@ -45,6 +45,11 @@
 - Completed Library: versioned artifact list, review panel, and local-only text downloads.
 - Completed Settings source-health controls: independent email/calendar degradation, always-available manual work, and explicit reset confirmation before local seed replacement.
 - Verification: full `pnpm test` passed (16 tests across 11 files); `pnpm build` passed; forbidden-capability scan returned no email/social provider, network send, or publish implementation.
-- Prepared Playwright journeys for RaceTrac local-only completion, H-E-B accountable override, changed-payload denial, degraded email/calendar operation, and mobile overflow/navigation checks. They are intentionally not browser-executed until the user names an approved browser.
+- Prepared Playwright journeys for RaceTrac local-only completion, H-E-B accountable override, changed-payload denial, degraded email/calendar operation, and mobile overflow/navigation checks.
 - Corrected account binding so an override remains attached to the exact reviewed account instead of a hardcoded RaceTrac target.
 - Verification: full `pnpm test` passed (17 tests across 11 files); `pnpm build` passed. `vitest` now excludes the separate `tests/e2e/` Playwright suite.
+- Completed visual and critical-journey QA in the user-selected Codex in-app Browser at 1488 × 1058 and 390 × 844.
+- Compared Today, RaceTrac account workspace, and Portfolio progress directly against approved references. Corrected Pipeline by adding working portfolio filters, explicit account next moves, the complete Account Thesis artifact/criteria checklist, and founder-gated advancement.
+- Browser-verified exact-action locking, changed-payload denial, explicit founder-presence confirmation, local-only single-use receipt, H-E-B accountable override, independently degraded email/calendar sources, manual-work continuity, mobile navigation, and no horizontal overflow across all ten primary routes.
+- Verification: full `pnpm test` passed (18 tests across 11 files); `pnpm build` passed; browser console contained no application warnings or errors; outbound-capability scan still found no email/social provider client, network send, or publish implementation.
+- Design QA evidence is documented in `docs/design-qa.md`. The only remaining implementation dependency is Claude's domain/application/data service contract; `dev-com/gpt/new/` remains empty as of this checkpoint.

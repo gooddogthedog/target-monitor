@@ -1,4 +1,4 @@
-import { AlertTriangle, Check, Circle, ShieldCheck } from 'lucide-react';
+import { AlertTriangle, Check, CheckCircle2, Circle, FileText, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
 import { Badge } from '../../ui/Badge';
 import { Button } from '../../ui/Button';
@@ -7,15 +7,19 @@ import { OverrideDialog } from './OverrideDialog';
 
 const phases = ['Target Brief', 'Account Thesis', 'Contacted', 'Discovery', 'Diagnostic', 'Pilot', 'Rollout'] as const;
 const accounts = [
-  { name: 'RaceTrac', initials: 'RT', score: 88, phase: 1, gate: '3 of 4 complete', blocker: 'Buyer path not selected', impact: 'High' },
-  { name: 'H-E-B', initials: 'HB', score: 84, phase: 0, gate: '5 of 6 complete', blocker: 'Commissioning owner unknown', impact: 'Medium' },
-  { name: 'Bagel Brands', initials: 'BB', score: 72, phase: 1, gate: '4 of 5 complete', blocker: 'Company-owned scope unverified', impact: 'Medium' },
+  { name: 'RaceTrac', initials: 'RT', score: 88, phase: 1, gate: '3 of 4 complete', blocker: 'Buyer path not selected', impact: 'High', needsReview: false, nextMove: 'Choose buyer path' },
+  { name: 'H-E-B', initials: 'HB', score: 84, phase: 0, gate: '5 of 6 complete', blocker: 'Commissioning owner unknown', impact: 'Medium', needsReview: true, nextMove: 'Resolve buyer hypothesis' },
+  { name: 'Bagel Brands', initials: 'BB', score: 72, phase: 1, gate: '4 of 5 complete', blocker: 'Company-owned scope unverified', impact: 'Medium', needsReview: true, nextMove: 'Run ownership verification' },
 ] as const;
+
+const portfolioFilters = ['Active', 'Blocked', 'Needs review'] as const;
 
 export function PipelinePage() {
   const [reviewed, setReviewed] = useState<(typeof accounts)[number] | null>(null);
   const [overrideTarget, setOverrideTarget] = useState<(typeof accounts)[number] | null>(null);
   const [recordedOverride, setRecordedOverride] = useState<{ owner: string; account: string } | null>(null);
+  const [portfolioFilter, setPortfolioFilter] = useState<(typeof portfolioFilters)[number]>('Active');
+  const visibleAccounts = portfolioFilter === 'Needs review' ? accounts.filter((account) => account.needsReview) : accounts;
 
   function openOverride() {
     setOverrideTarget(reviewed);
@@ -37,6 +41,20 @@ export function PipelinePage() {
         </dl>
       </header>
 
+      <div className="pipeline-tabs" aria-label="Portfolio filters">
+        {portfolioFilters.map((filter) => (
+          <button
+            type="button"
+            key={filter}
+            aria-pressed={portfolioFilter === filter}
+            className={portfolioFilter === filter ? 'pipeline-tab pipeline-tab--active' : 'pipeline-tab'}
+            onClick={() => setPortfolioFilter(filter)}
+          >
+            {filter}
+          </button>
+        ))}
+      </div>
+
       {recordedOverride ? (
         <aside className="override-record" role="status">
           <ShieldCheck aria-hidden="true" />
@@ -45,11 +63,11 @@ export function PipelinePage() {
       ) : null}
 
       <div className="pipeline-layout">
-        <div className="pipeline-matrix">
+        <div className="pipeline-matrix" aria-label="Account progress matrix">
           <div className="pipeline-phase-head" aria-hidden="true">
             <span />{phases.map((phase) => <span key={phase}>{phase}</span>)}
           </div>
-          {accounts.map((account) => (
+          {visibleAccounts.map((account) => (
             <article className="pipeline-account" key={account.name}>
               <div className="pipeline-account__name"><span>{account.initials}</span><strong>{account.name}</strong></div>
               <ol className="pipeline-track" aria-label={`${account.name} lifecycle`}>
@@ -64,7 +82,7 @@ export function PipelinePage() {
                 <span><small>Qualification</small><strong>{account.score} / 100</strong></span>
                 <span><small>Gate status</small><strong>{account.gate}</strong></span>
                 <span className="pipeline-account__blocker"><small>Blocker</small><strong><AlertTriangle aria-hidden="true" />{account.blocker}</strong></span>
-                <Button variant="quiet" aria-label={`Review ${account.name} blocked gate`} onClick={() => setReviewed(account)}>Review gate</Button>
+                <Button variant="quiet" aria-label={`Review ${account.name} blocked gate`} onClick={() => setReviewed(account)}>{account.nextMove}</Button>
               </div>
             </article>
           ))}
@@ -83,8 +101,26 @@ export function PipelinePage() {
       </div>
 
       <section className="gate-requirements" aria-labelledby="requirements-title">
-        <div><h2 id="requirements-title">Account Thesis requirements</h2><p>Required artifacts and gate criteria remain visible before any advancement decision.</p></div>
-        <div className="gate-requirements__rule"><ShieldCheck aria-hidden="true" /><p><strong>Advancement rule</strong><br />Gate completion plus explicit founder approval.</p></div>
+        <header><h2 id="requirements-title">Account Thesis requirements</h2><p>Everything required before an account can advance.</p></header>
+        <div className="gate-requirements__columns">
+          <div className="requirement-column">
+            <strong>Required artifacts</strong>
+            {['External Target Brief', 'Deal Thesis', 'Qualification Scorecard'].map((artifact) => (
+              <span key={artifact}><FileText aria-hidden="true" />{artifact}<CheckCircle2 aria-hidden="true" /></span>
+            ))}
+          </div>
+          <div className="requirement-column requirement-column--criteria">
+            <strong>Gate criteria</strong>
+            {['Specific operational problem', 'Plausible buyer', 'Credible trigger', 'Narrow conversation request'].map((criterion) => (
+              <span key={criterion}><CheckCircle2 aria-hidden="true" />{criterion}</span>
+            ))}
+          </div>
+          <div className="gate-requirements__rule">
+            <ShieldCheck aria-hidden="true" />
+            <p><strong>Advancement rule</strong><br />Gate completion plus explicit founder approval.</p>
+            <Button onClick={() => setReviewed(accounts[0])}>Review advancement</Button>
+          </div>
+        </div>
       </section>
 
       <GateReviewDialog
