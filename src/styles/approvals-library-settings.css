@@ -85,7 +85,7 @@
 .approval-invalidated { margin: 0; padding: 10px; border: 1px solid #f0bbb7; border-radius: var(--radius-sm); background: #fff0ef; color: var(--danger); font-size: .75rem; line-height: 1.45; }
 .payload-hash { display: grid; gap: 5px; margin: auto 0 0; padding-top: 16px; border-top: 1px solid var(--line); }
 .payload-hash span { color: var(--muted); font-size: .68rem; }
-.payload-hash strong { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .74rem; }
+.payload-hash strong { overflow-wrap: anywhere; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .74rem; }
 .demo-presence { display: flex; align-items: flex-start; gap: 13px; padding: 14px; border: 1px solid #e6af65; border-radius: var(--radius-sm); background: #fffaf1; }
 .demo-presence > svg { width: 22px; color: var(--amber); flex: 0 0 auto; }
 .demo-presence p { margin: 6px 0 0; color: #76501d; font-size: .82rem; line-height: 1.5; }
