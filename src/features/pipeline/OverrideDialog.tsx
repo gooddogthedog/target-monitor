@@ -7,7 +7,7 @@ interface OverrideDialogProps {
   account: string;
   blocker: string;
   onClose: () => void;
-  onRecord: (owner: string) => void;
+  onRecord: (input: { owner: string; reason: string; riskAcknowledged: boolean }) => void;
 }
 
 export function OverrideDialog({ open, account, blocker, onClose, onRecord }: OverrideDialogProps) {
@@ -24,7 +24,12 @@ export function OverrideDialog({ open, account, blocker, onClose, onRecord }: Ov
       footer={
         <>
           <Button variant="secondary" onClick={onClose}>Cancel</Button>
-          <Button disabled={!complete} onClick={() => onRecord(owner.trim())}>Record override</Button>
+          <Button
+            disabled={!complete}
+            onClick={() => onRecord({ owner: owner.trim(), reason: reason.trim(), riskAcknowledged })}
+          >
+            Record override
+          </Button>
         </>
       }
     >
@@ -55,4 +60,3 @@ export function OverrideDialog({ open, account, blocker, onClose, onRecord }: Ov
     </Modal>
   );
 }
-

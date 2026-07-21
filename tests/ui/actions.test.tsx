@@ -1,17 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+import { AppServiceProvider } from '../../src/app/AppServiceProvider';
+import { createDemoAppService } from '../../src/application/demoAppService';
 import { ActionsPage } from '../../src/features/actions/ActionsPage';
 
 it('filters the priority ledger and records a reasoned manual pin', async () => {
   const user = userEvent.setup();
-  render(
-    <MemoryRouter>
-      <ActionsPage />
-    </MemoryRouter>,
-  );
+  const service = createDemoAppService(`actions-ui-${crypto.randomUUID()}`);
+  render(<AppServiceProvider service={service}><MemoryRouter><ActionsPage /></MemoryRouter></AppServiceProvider>);
 
-  expect(screen.getAllByTestId('priority-action')).toHaveLength(5);
+  expect(await screen.findAllByTestId('priority-action')).toHaveLength(5);
   await user.click(screen.getByRole('button', { name: 'Approvals' }));
   expect(screen.getAllByTestId('priority-action')).toHaveLength(2);
 

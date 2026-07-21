@@ -97,3 +97,10 @@ a {
   color: white;
   cursor: pointer;
 }
+
+.workspace-startup {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  background: var(--surface);
+}

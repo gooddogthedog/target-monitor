@@ -1,6 +1,7 @@
 import { Building2, CalendarClock, Pin, SlidersHorizontal } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAppService } from '../../app/AppServiceProvider';
 import { Badge } from '../../ui/Badge';
 import { Button } from '../../ui/Button';
 import { Modal } from '../../ui/Modal';
@@ -8,11 +9,11 @@ import { Modal } from '../../ui/Modal';
 type ActionFilter = 'all' | 'approvals' | 'blocked' | 'overdue' | 'research';
 
 const actions = [
-  { id: 'racetrac-audit', account: 'RaceTrac', title: 'Approve regional asset-audit outreach', why: 'ServiceChannel and pump-parts evidence support the wedge.', confidence: 86, owner: 'Alex', due: 'Today', tags: ['approvals'], pinLabel: 'Pin RaceTrac action' },
-  { id: 'heb-buyer', account: 'H-E-B', title: 'Resolve buyer hypothesis before outreach', why: 'Facilities and construction ownership remain split.', confidence: 61, owner: 'Sam', due: 'Jul 22', tags: ['blocked', 'approvals'], pinLabel: 'Pin H-E-B action' },
-  { id: 'bagel-scope', account: 'Bagel Brands', title: 'Validate company-owned pilot scope', why: 'Mixed ownership may fragment operating authority.', confidence: 56, owner: 'Jordan', due: 'Jul 24', tags: ['research'], pinLabel: 'Pin Bagel Brands action' },
-  { id: 'racetrac-followup', account: 'RaceTrac', title: 'Follow up with Facilities VP', why: 'A positive initial response creates near-term momentum.', confidence: 76, owner: 'Taylor', due: 'Overdue', tags: ['overdue'], pinLabel: 'Pin RaceTrac follow-up' },
-  { id: 'heb-signal', account: 'H-E-B', title: 'Review North Texas expansion signal', why: 'Store and distribution growth indicates near-term spend.', confidence: 59, owner: 'Riley', due: 'Jul 23', tags: ['research'], pinLabel: 'Pin H-E-B signal' },
+  { id: 'racetrac-audit', serviceId: 'action-racetrac-outreach', account: 'RaceTrac', title: 'Approve regional asset-audit outreach', why: 'ServiceChannel and pump-parts evidence support the wedge.', confidence: 86, owner: 'Alex', due: 'Today', tags: ['approvals'], pinLabel: 'Pin RaceTrac action' },
+  { id: 'heb-buyer', serviceId: 'action-heb-discovery', account: 'H-E-B', title: 'Resolve buyer hypothesis before outreach', why: 'Facilities and construction ownership remain split.', confidence: 61, owner: 'Sam', due: 'Jul 22', tags: ['blocked', 'approvals'], pinLabel: 'Pin H-E-B action' },
+  { id: 'bagel-scope', serviceId: 'action-bagel-verify', account: 'Bagel Brands', title: 'Validate company-owned pilot scope', why: 'Mixed ownership may fragment operating authority.', confidence: 56, owner: 'Jordan', due: 'Jul 24', tags: ['research'], pinLabel: 'Pin Bagel Brands action' },
+  { id: 'racetrac-followup', serviceId: 'action-racetrac-research', account: 'RaceTrac', title: 'Follow up with Facilities VP', why: 'A positive initial response creates near-term momentum.', confidence: 76, owner: 'Taylor', due: 'Overdue', tags: ['overdue'], pinLabel: 'Pin RaceTrac follow-up' },
+  { id: 'heb-signal', serviceId: 'action-heb-reconcile', account: 'H-E-B', title: 'Review North Texas expansion signal', why: 'Store and distribution growth indicates near-term spend.', confidence: 59, owner: 'Riley', due: 'Jul 23', tags: ['research'], pinLabel: 'Pin H-E-B signal' },
 ] as const;
 
 const filters: Array<{ key: ActionFilter; label: string }> = [
@@ -24,6 +25,7 @@ const filters: Array<{ key: ActionFilter; label: string }> = [
 ];
 
 export function ActionsPage() {
+  const { service } = useAppService();
   const [filter, setFilter] = useState<ActionFilter>('all');
   const [pinningId, setPinningId] = useState<string | null>(null);
   const [reason, setReason] = useState('');
@@ -33,8 +35,11 @@ export function ActionsPage() {
     (action) => filter === 'all' || action.tags.includes(filter as never),
   );
 
-  function savePin() {
+  async function savePin() {
     if (!pinningId || !reason.trim()) return;
+    const action = actions.find((item) => item.id === pinningId);
+    if (!action) return;
+    await service.pinAction(action.serviceId, reason.trim());
     setPinnedReasons((current) => ({ ...current, [pinningId]: reason.trim() }));
     setPinningId(null);
     setReason('');

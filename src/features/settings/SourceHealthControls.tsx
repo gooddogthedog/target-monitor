@@ -1,5 +1,4 @@
 import { CalendarDays, FileText, Globe2, Mail, NotebookPen } from 'lucide-react';
-import type { Dispatch, SetStateAction } from 'react';
 import { Badge } from '../../ui/Badge';
 
 export type Health = 'connected' | 'not-connected' | 'stale' | 'temporarily-unavailable';
@@ -7,8 +6,8 @@ export type Health = 'connected' | 'not-connected' | 'stale' | 'temporarily-unav
 interface SourceHealthControlsProps {
   emailHealth: Health;
   calendarHealth: Health;
-  setEmailHealth: Dispatch<SetStateAction<Health>>;
-  setCalendarHealth: Dispatch<SetStateAction<Health>>;
+  setEmailHealth: (health: Health) => void;
+  setCalendarHealth: (health: Health) => void;
 }
 
 const statusLabels: Record<Health, string> = {
@@ -31,4 +30,3 @@ export function SourceHealthControls({ emailHealth, calendarHealth, setEmailHeal
     </div>
   );
 }
-

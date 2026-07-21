@@ -1,5 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
+import type { AppService } from '../../src/domain/contracts';
+import { AppServiceProvider } from '../../src/app/AppServiceProvider';
 import { Badge } from '../../src/ui/Badge';
 import { Button } from '../../src/ui/Button';
 import { ConfidenceBar } from '../../src/ui/ConfidenceBar';
@@ -57,4 +60,28 @@ it('renders a dismissible modal and semantic badge', async () => {
   expect(screen.getByRole('dialog', { name: 'Review exact action' })).toBeVisible();
   await user.click(screen.getByRole('button', { name: 'Close dialog' }));
   expect(closed).toBe(true);
+});
+
+it('retries persistence initialization without resetting local work', async () => {
+  const user = userEvent.setup();
+  const service = {
+    initialize: vi.fn()
+      .mockRejectedValueOnce(new Error('IndexedDB unavailable'))
+      .mockResolvedValueOnce(undefined),
+    resetDemoData: vi.fn(),
+  } as unknown as AppService;
+
+  render(
+    <AppServiceProvider service={service}>
+      <div>Workspace ready</div>
+    </AppServiceProvider>,
+  );
+
+  expect(await screen.findByRole('alert')).toHaveTextContent(/local workspace could not be opened/i);
+  expect(service.resetDemoData).not.toHaveBeenCalled();
+
+  await user.click(screen.getByRole('button', { name: /retry local workspace/i }));
+  expect(await screen.findByText('Workspace ready')).toBeVisible();
+  expect(service.initialize).toHaveBeenCalledTimes(2);
+  expect(service.resetDemoData).not.toHaveBeenCalled();
 });

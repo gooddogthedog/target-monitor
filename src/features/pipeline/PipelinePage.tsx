@@ -1,5 +1,6 @@
 import { AlertTriangle, Check, CheckCircle2, Circle, FileText, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
+import { useAppService } from '../../app/AppServiceProvider';
 import { Badge } from '../../ui/Badge';
 import { Button } from '../../ui/Button';
 import { GateReviewDialog } from './GateReviewDialog';
@@ -7,14 +8,15 @@ import { OverrideDialog } from './OverrideDialog';
 
 const phases = ['Target Brief', 'Account Thesis', 'Contacted', 'Discovery', 'Diagnostic', 'Pilot', 'Rollout'] as const;
 const accounts = [
-  { name: 'RaceTrac', initials: 'RT', score: 88, phase: 1, gate: '3 of 4 complete', blocker: 'Buyer path not selected', impact: 'High', needsReview: false, nextMove: 'Choose buyer path' },
-  { name: 'H-E-B', initials: 'HB', score: 84, phase: 0, gate: '5 of 6 complete', blocker: 'Commissioning owner unknown', impact: 'Medium', needsReview: true, nextMove: 'Resolve buyer hypothesis' },
-  { name: 'Bagel Brands', initials: 'BB', score: 72, phase: 1, gate: '4 of 5 complete', blocker: 'Company-owned scope unverified', impact: 'Medium', needsReview: true, nextMove: 'Run ownership verification' },
+  { name: 'RaceTrac', gateId: 'gate-racetrac-contacted', initials: 'RT', score: 88, phase: 1, gate: '3 of 4 complete', blocker: 'Buyer path not selected', impact: 'High', needsReview: false, nextMove: 'Choose buyer path' },
+  { name: 'H-E-B', gateId: 'gate-heb-diagnostic', initials: 'HB', score: 84, phase: 0, gate: '5 of 6 complete', blocker: 'Commissioning owner unknown', impact: 'Medium', needsReview: true, nextMove: 'Resolve buyer hypothesis' },
+  { name: 'Bagel Brands', gateId: 'gate-bagel-discovery', initials: 'BB', score: 72, phase: 1, gate: '4 of 5 complete', blocker: 'Company-owned scope unverified', impact: 'Medium', needsReview: true, nextMove: 'Run ownership verification' },
 ] as const;
 
 const portfolioFilters = ['Active', 'Blocked', 'Needs review'] as const;
 
 export function PipelinePage() {
+  const { service } = useAppService();
   const [reviewed, setReviewed] = useState<(typeof accounts)[number] | null>(null);
   const [overrideTarget, setOverrideTarget] = useState<(typeof accounts)[number] | null>(null);
   const [recordedOverride, setRecordedOverride] = useState<{ owner: string; account: string } | null>(null);
@@ -135,9 +137,19 @@ export function PipelinePage() {
         account={overrideTarget?.name ?? ''}
         blocker={overrideTarget?.blocker ?? ''}
         onClose={() => setOverrideTarget(null)}
-        onRecord={(owner) => {
-          setRecordedOverride({ owner, account: overrideTarget?.name ?? 'Account' });
-          setOverrideTarget(null);
+        onRecord={({ owner, reason, riskAcknowledged }) => {
+          if (!overrideTarget) return;
+          void service.createOverride({
+            gateId: overrideTarget.gateId,
+            reason,
+            riskAcknowledged,
+            authorId: 'user-caleb',
+            createdAt: new Date().toISOString(),
+          }).then((result) => {
+            if (!result.ok) return;
+            setRecordedOverride({ owner, account: overrideTarget.name });
+            setOverrideTarget(null);
+          });
         }}
       />
     </section>
