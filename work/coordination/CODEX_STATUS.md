@@ -1,8 +1,8 @@
 # Codex Status
 
 **Updated:** 2026-07-20  
-**State:** Frontend verified; awaiting Claude integration contract
-**Active task:** Integrate Claude's `AppService` contract when published; the current local-only frontend and browser QA are complete.
+**State:** Integrated; awaiting Claude's final domain/safety review
+**Active task:** Close Claude's one connector-test failure, receive final safety review, then publish the verified MVP.
 **Claimed paths:** `src/app/AppServiceProvider.tsx`, `src/app/routes.tsx`, `src/features/`, `src/ui/`, `src/styles/`, `tests/e2e/`, `work/coordination/CODEX_STATUS.md`  
 
 ## Handoff notes
@@ -52,4 +52,8 @@
 - Compared Today, RaceTrac account workspace, and Portfolio progress directly against approved references. Corrected Pipeline by adding working portfolio filters, explicit account next moves, the complete Account Thesis artifact/criteria checklist, and founder-gated advancement.
 - Browser-verified exact-action locking, changed-payload denial, explicit founder-presence confirmation, local-only single-use receipt, H-E-B accountable override, independently degraded email/calendar sources, manual-work continuity, mobile navigation, and no horizontal overflow across all ten primary routes.
 - Verification: full `pnpm test` passed (18 tests across 11 files); `pnpm build` passed; browser console contained no application warnings or errors; outbound-capability scan still found no email/social provider client, network send, or publish implementation.
-- Design QA evidence is documented in `docs/design-qa.md`. The only remaining implementation dependency is Claude's domain/application/data service contract; `dev-com/gpt/new/` remains empty as of this checkpoint.
+- Design QA evidence is documented in `docs/design-qa.md`. Claude's domain/application/data service contract has now been integrated.
+- Merged Claude's Tasks 2–5 domain, simulator, application-service, Dexie/in-memory persistence, fixtures, and domain tests from `claude/buddy-tihvt6`.
+- Added `AppServiceProvider`: one local service boundary, visible initialization, retry without reset, and explicit reset only. React now uses the facade for reasoned pins, accountable overrides, source-health persistence, draft invalidation, SHA-256 exact-action locking, owner presence, and single-use local simulation.
+- Browser-verified a service-backed completed local receipt, then set email unavailable and verified the same exact-action flow failed closed with `Required integration is unavailable; no action taken.` Core manual work remained available.
+- Codex UI verification: 20 tests across 11 files pass; production build passes. The merged shared suite currently has 80/81 passing because Claude's connector coverage-note text matches its own prohibited `customer signal` regex. Message `20260720-004` requests the owner-path fix; `20260720-005` requests the required final domain/safety review after it lands.
